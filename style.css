@@ -1,0 +1,124 @@
+body {
+    overflow-x: hidden;
+}
+
+#account {
+    font-size: 32px;
+
+}
+#wallet-icon {
+    margin-left: 1%;
+    font-size: 24px;
+    transition: transform 0.5s ease-in-out;
+}
+.wallet-full {
+    transform: scale(1.15);
+    color: green;
+
+}
+
+.icon {
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+
+.collection {
+    width: auto;
+    height: 45vh;
+    overflow: auto;
+}
+
+.collection-item {
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+#exportButton {
+    float: right;
+}
+
+
+.positive {
+    width: 250px;
+    height: 100px;
+    background-color: #ddffdd; 
+    color: #00d87e;
+    position: absolute;
+    top: 20px;
+    right: -300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: right 1 ease-in-out;
+    animation-name: slide-in;
+    animation-duration: 5s;
+    animation-iteration-count: 1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    padding: 10px;
+}
+
+@keyframes slide-in {
+    0%   {right: -20vh; top: 0px;}
+    50%  {right: 2vh; top: 0px;}
+    100% {right: -20vh; top: 0px;}
+
+}
+
+.negative {
+    width: 250px;
+    height: 100px;
+    background-color: #ffdddd; 
+    color: #d8000c;
+    position: absolute;
+    top: 20px;
+    right: -300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: right 1 ease-in-out;
+    animation-name: slide-in;
+    animation-duration: 5s;
+    animation-iteration-count: 1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    padding: 10px;
+}
+
+#close-button {
+    cursor: pointer;
+    color: red;
+    font-size: 24px;
+}
+
+.dialog {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+  }
+  
+  .dialog-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .dialog-body button {
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Wallet App</title>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="row">
+            <div class="wallet-display">
+                <i id="wallet-icon" class="material-icons wallet-icon">account_balance_wallet</i>
+                <span id="account" class="flow-text"></span>
+            </div>
+            <div class="col s12">
+                <button id="add" class="btn">Add</button>
+                <button id="remove" class="btn red">Remove</button>
+            </div>
+            <div class="col s12 input-field">
+                <input type="number" id="amount" placeholder="Amount">
+            </div>
+            <div class="col s12 input-field">
+                <input type="text" id="description" placeholder="Description">
+            </div>
+            <div>
+                <select id="category" class="browser-default">
+                    <option value="" disabled selected>Choose category</option>
+                    <option value="income">Income</option>
+                    <option value="food">Food</option>
+                    <option value="house">House</option>
+                    <option value="vehicle">Vehicle</option>
+                    <option value="entertainment">Entertainment</option>
+                </select>
+            </div>
+            <div class="col s12">
+                <p><b>History</b></p>
+                <p>Sort by:</p>
+                <button id="sort-amount" class="btn">Amount</button>
+                <button id="sort-category" class="btn">Category</button>
+                <button id="sort-date" class="btn">Date</buttton>
+                <button id="exportButton" class="btn">Export</button>
+                    <div id="exportDialog" class="dialog" style="display:none;">
+                      <div class="dialog-content">
+                        <div class="dialog-header">
+                          <span class="close-button" id="close-button">&times;</span>
+                          <h6>Export to</h6>
+                        </div>
+                        <div class="dialog-body">
+                          <button id="export-csv">CSV</button>
+                          <button id="export-txt">TXT</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col s12">
+                <div id="history">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="notificationSound" src="sounds/notify.wav" preload="auto"></audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="module" src="app.js"></script>
+    
+</body>
+</html>
