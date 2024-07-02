@@ -8,12 +8,13 @@ export class Wallet {
         this.money += amount
         this.updateDisplay()
         this.updateHistory(`<i class="material-icons icon">add</i>${amount}$`, `Description: ${description}`, `Type: ${category}`, category, `Date: ${date.toLocaleString('pl-PL')}`)
+        this.statistics(amount, "add")
     }
     removeMoney(amount, description, category, date = new Date()){
         this.money -= amount
         this.updateDisplay()
         this.updateHistory(`<i class="material-icons icon">remove_circle</i>${amount}$`, `Description: ${description}`, `Type: ${category}`, category, `Date: ${date.toLocaleString('pl-PL')}`)
-
+        this.statistics(amount, "remove")
     }
     updateDisplay() {
         document.getElementById("account").textContent = this.money
@@ -35,6 +36,23 @@ export class Wallet {
             ul.appendChild(listItem)
         })
     }
+    statistics(amount, type) {
+        const addStats = document.getElementById("stats-add")
+        const removeStats = document.getElementById("stats-remove")
+        if (!this.addedCash) {
+            this.addedCash = 0
+        }
+        if (!this.removedCash) {
+            this.removedCash = 0
+        }
+        if (type === "add") {
+            this.addedCash += amount
+            addStats.innerHTML = `Total earned money ${this.addedCash.toFixed(2)}`
+        } else if (type === "remove") {
+            this.removedCash += amount
+            removeStats.innerHTML = `Total spend money ${this.removedCash.toFixed(2)}`
+        }
+    }
     sortAmount() {
         const sort = [...this.history].sort((a, b) => a.amount - b.amount)
         this.historyDisplay(sort)
@@ -48,9 +66,6 @@ export class Wallet {
         this.historyDisplay(sort)
      
     }
-
-    
-
     updateWalletIcon() {
         const walletIcon = document.getElementById("wallet-icon")
         if (this.money > 0) {
@@ -80,7 +95,7 @@ export class Wallet {
                 let amount = ""
                 for (let char of transaction.action) {
                     if ('0123456789'.includes(char)) {
-                      amount += char;
+                      amount += char
                     }
                   }
                 
@@ -90,13 +105,13 @@ export class Wallet {
             file = "wallet.csv"
         }
     
-        const encodedUri = encodeURI(content);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", file);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        const encodedUri = encodeURI(content)
+        const link = document.createElement("a")
+        link.setAttribute("href", encodedUri)
+        link.setAttribute("download", file)
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
     }
     
 

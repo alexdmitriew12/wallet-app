@@ -35,8 +35,9 @@ body {
     justify-content: center;
 }
 
-#exportButton {
+#exportButton, #statsButton {
     float: right;
+    margin: 2px;
 }
 
 
@@ -91,7 +92,7 @@ body {
     padding: 10px;
 }
 
-#close-button {
+#close-export, #close-stats {
     cursor: pointer;
     color: red;
     font-size: 24px;
@@ -108,17 +109,22 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 100;
-  }
+}
   
-  .dialog-content {
+.dialog-content {
     background-color: white;
-    padding: 20px;
+    padding: 14px;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  }
+    font-size: 18px;
+    width: 10%;
+}
   
-  .dialog-body button {
+.dialog-body button {
     margin: 10px;
     padding: 10px 20px;
     cursor: pointer;
-  }
+    font-size: 14px;
+
+}
+

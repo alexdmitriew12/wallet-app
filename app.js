@@ -78,15 +78,22 @@ const notification = (type, message) => {
 
 
 document.getElementById('exportButton').addEventListener('click', function() {
-    toggleExportDialog(true);
+    toggleExportDialog(true)
 })
+document.getElementById('statsButton').addEventListener('click', function() {
+    toggleStatsDialog(true)
+})
+
+const toggleStatsDialog = (show) => {
+    console.log("ok")
+    document.getElementById('statsMenu').style.display = show ? 'flex' : 'none'
+
+}
 
 const toggleExportDialog = (show) => {
     document.getElementById('exportDialog').style.display = show ? 'flex' : 'none'
     document.getElementById("export-csv").addEventListener("click", () => myWallet.exportToCSV("csv"))
     document.getElementById("export-txt").addEventListener("click", () => myWallet.exportToCSV("txt"))
-
-
 }
 
 
@@ -101,7 +108,9 @@ document.getElementById("remove").addEventListener("click", removeMoney)
 document.getElementById("sort-amount").addEventListener("click", () => myWallet.sortAmount())
 document.getElementById("sort-category").addEventListener("click", () => myWallet.sortCategory())
 document.getElementById("sort-date").addEventListener("click", () => myWallet.sortDate())
-document.getElementById("close-button").addEventListener("click", () => toggleExportDialog(false))
+document.getElementById("close-export").addEventListener("click", () => toggleExportDialog(false))
+document.getElementById("close-stats").addEventListener("click", () => toggleStatsDialog(false))
+
 
 
 

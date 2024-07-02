@@ -37,16 +37,16 @@
                 </select>
             </div>
             <div class="col s12">
-                <p><b>History</b></p>
                 <p>Sort by:</p>
                 <button id="sort-amount" class="btn">Amount</button>
                 <button id="sort-category" class="btn">Category</button>
                 <button id="sort-date" class="btn">Date</buttton>
+                <button id="statsButton" class="btn">Statistics</button>
                 <button id="exportButton" class="btn">Export</button>
                     <div id="exportDialog" class="dialog" style="display:none;">
                       <div class="dialog-content">
                         <div class="dialog-header">
-                          <span class="close-button" id="close-button">&times;</span>
+                          <span class="close-button" id="close-export">&times;</span>
                           <h6>Export to</h6>
                         </div>
                         <div class="dialog-body">
@@ -56,7 +56,25 @@
                     </div>
                 </div>
 
+                <div id="statsMenu" class="dialog" style="display:none;">
+                    <div class="dialog-content">
+                        <div class="dialog-header">
+                            <span class="close-button" id="close-stats">&times;</span>
+                        </div>
+                        <div class="dialog-body">
+                            <div id="stats-add" class="stats-box">No content to display</div>
+                            <div id="stats-remove" class="stats-box"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+
+
+
+
+
             <div class="col s12">
                 <div id="history">
                     
