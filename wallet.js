@@ -5,33 +5,35 @@ export class Wallet {
     }
 
     addMoney(amount, description, category, date = new Date()) {
+        amount = parseFloat(amount)
         this.money += amount
         this.updateDisplay()
-        this.updateHistory(`<i class="material-icons icon">add</i>${amount}$`, `Description: ${description}`, `Type: ${category}`, category, `Date: ${date.toLocaleString('pl-PL')}`)
+        this.updateHistory(`<i class="material-icons icon">add</i>${amount}$`,`Description: ${description}`,`Type: `, category,`Date: ${date.toLocaleString('pl-PL')}`)
         this.statistics(amount, "add")
     }
     removeMoney(amount, description, category, date = new Date()){
+        amount = parseFloat(amount)
         this.money -= amount
         this.updateDisplay()
-        this.updateHistory(`<i class="material-icons icon">remove_circle</i>${amount}$`, `Description: ${description}`, `Type: ${category}`, category, `Date: ${date.toLocaleString('pl-PL')}`)
+        this.updateHistory(`<i class="material-icons icon">remove_circle</i>${amount}$`,`Description: ${description}`,`Type: `, category,`Date: ${date.toLocaleString('pl-PL')}`)
         this.statistics(amount, "remove")
     }
     updateDisplay() {
         document.getElementById("account").textContent = this.money
         this.updateWalletIcon()
     }
-    updateHistory(action, description, category, amount, date) {
-        this.history.push({action, description, category, amount, date})
+    updateHistory(amount, action, description, category, date) {
+        this.history.push({amount,action,description,category,date
+        })
         this.historyDisplay()
-
     }
     historyDisplay(sortedHistory = this.history) {
-        const historyElement = document.getElementById("history")
-        historyElement.innerHTML = '<ul class="collection"></ul>'
-        const ul = historyElement.querySelector('.collection')
+        const historyElement = document.getElementById("history");
+        historyElement.innerHTML = '<ul class="collection"></ul>';
+        const ul = historyElement.querySelector('.collection');
         sortedHistory.forEach(element => {
             let listItem = document.createElement("li")
-            listItem.innerHTML = `${element.action}, ${element.description}, ${element.category}, ${element.date}`
+            listItem.innerHTML = `${element.amount}, ${element.action}, ${element.description} ${element.category}, ${element.date}`
             listItem.className = 'collection-item'
             ul.appendChild(listItem)
         })
@@ -54,8 +56,11 @@ export class Wallet {
         }
     }
     sortAmount() {
-        const sort = [...this.history].sort((a, b) => a.amount - b.amount)
-        this.historyDisplay(sort)
+        const sortedHistory = this.history.map(item => ({
+            ...item,
+            newAmount: parseFloat(item.amount.replace(/[^0-9.]/g, ''))
+        })).sort((a, b) => a.newAmount - b.newAmount)
+        this.historyDisplay(sortedHistory)
     }
     sortCategory() {
         const sort = [...this.history].sort((a,b) => a.category.localeCompare(b.category))
