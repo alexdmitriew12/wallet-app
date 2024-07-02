@@ -6,7 +6,6 @@ Moreover app has a simple notification system.
 UI made with materialize css framework.
 
 Plans to develop:
-- Statistics
 - Currency
 - Filters
 - Improve sorting system 
