@@ -1,12 +1,21 @@
-Wallet app
+Wallet App
 
-User can add and remove money to his wallet including amount, description and category of his income or expense.
-User can manage his expenses in history by sorting, you can export history to CSV or TXT file.
-Moreover app has a simple notification system.
-UI made with materialize css framework.
+This app provides user to track his incomes and expenses. 
+
+Wallet App allowes to:
+- Exchanging your currency
+- Exporting your data to CSV or TXT file
+- Checking your general statistics
+- Sorting your data in history by amounts, categories and date
 
 Plans to develop:
-- Currency
-- Filters
-- Improve sorting system 
-![Zrzut ekranu (147)](https://github.com/alexdmitriew12/wallet-app/assets/126459381/b19a8c5d-5552-45c8-80d4-eb67c88cc858)
+- UI improvment (primarily history display and money/currencies)
+- Search option
+
+Dependencies:
+- Live server (xampp for example)
+- Free api key from https://www.exchangerate-api.com/
+
+To use app correctly you should to paste your api key in currencyApi.js file
+
+![Zrzut ekranu (153)](https://github.com/alexdmitriew12/wallet-app/assets/126459381/a6f05d90-25f1-4830-b438-b85ad842bd41)
