@@ -15,6 +15,13 @@
             <div class="wallet-display">
                 <i id="wallet-icon" class="material-icons wallet-icon">account_balance_wallet</i>
                 <span id="account" class="flow-text"></span>
+                <span id="account-eur" class="flow-text"></span>
+                <span id="account-gbp" class="flow-text"></span>
+                <span id="account-jpy" class="flow-text"></span>
+
+
+
+
             </div>
             <div class="col s12">
                 <button id="add" class="btn">Add</button>
@@ -37,11 +44,12 @@
                 </select>
             </div>
             <div class="col s12">
-                <p>Sort by:</p>
+                <p>SORT BY:</p>
                 <button id="sort-amount" class="btn">Amount</button>
                 <button id="sort-category" class="btn">Category</button>
                 <button id="sort-date" class="btn">Date</buttton>
                 <button id="statsButton" class="btn">Statistics</button>
+                <button id="kantorButton" class="btn">Cantor</button>
                 <button id="exportButton" class="btn">Export</button>
                     <div id="exportDialog" class="dialog" style="display:none;">
                       <div class="dialog-content">
@@ -67,7 +75,35 @@
                         </div>
                     </div>
                 </div>
-
+                <div id="kantorMenu" class="dialog" style="display:none;">
+                    <div class="dialog-content">
+                        <div class="dialog-header">
+                            <span class="close-button" id="close-kantor">&times;</span>
+                        </div>
+                        <div class="dialog-body">
+                            <div class="col s12 input-field">
+                                <input type="number" id="kantor-amount" placeholder="Amount">
+                            </div>
+                            <div class="col s12">
+                                <select id="base-currency" class="browser-default">
+                                    <option value="" disabled selected>Select Base Currency</option>
+                                    <option value="USD">USD - US Dollar</option>
+                                </select>
+                            </div>
+                            <div class="col s12">
+                                <select id="target-currency" class="browser-default">
+                                    <option value="" disabled selected>Select Target Currency</option>
+                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="GBP">GBP - British Pound</option>
+                                    <option value="JPY">JPY - Japanese Yen</option>
+                                </select>
+                                <div id="exchangeRateDisplay">
+                                </div>
+                            </div>
+                        </div>
+                        <button id="kantorApply" class="btn">BUY</button>
+                    </div>
+                </div>
             </div>
 
 
@@ -85,6 +121,7 @@
     <audio id="notificationSound" src="sounds/notify.wav" preload="auto"></audio>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="module" src="app.js"></script>
+
     
 </body>
 </html>

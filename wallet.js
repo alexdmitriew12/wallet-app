@@ -1,25 +1,39 @@
+import { getExchangeRate } from './currencyApi.js'
+
 export class Wallet {
     constructor(money) {
         this.money = money
         this.history = []
+        this.currencies = {
+            USD: this.money,
+            EUR: 0,
+            GBP: 0,
+            JPY: 0
+        }
     }
 
     addMoney(amount, description, category, date = new Date()) {
         amount = parseFloat(amount)
-        this.money += amount
+        this.money += Number(amount.toFixed(2))
         this.updateDisplay()
         this.updateHistory(`<i class="material-icons icon">add</i>${amount}$`,`Description: ${description}`,`Type: `, category,`Date: ${date.toLocaleString('pl-PL')}`)
         this.statistics(amount, "add")
+        this.currencies.USD += Number(amount.toFixed(2))
     }
     removeMoney(amount, description, category, date = new Date()){
         amount = parseFloat(amount)
-        this.money -= amount
+        this.money -= Number(amount.toFixed(2))
         this.updateDisplay()
-        this.updateHistory(`<i class="material-icons icon">remove_circle</i>${amount}$`,`Description: ${description}`,`Type: `, category,`Date: ${date.toLocaleString('pl-PL')}`)
+        this.updateHistory(`<i class="material-icons icon">remove</i>${amount}$`,`Description: ${description}`,`Type: `, category,`Date: ${date.toLocaleString('pl-PL')}`)
         this.statistics(amount, "remove")
+        this.currencies.USD += Number(amount.toFixed(2))
+
     }
     updateDisplay() {
-        document.getElementById("account").textContent = this.money
+        document.getElementById("account").textContent = `$${this.money}`
+        document.getElementById("account-eur").textContent = `€${this.currencies.EUR}`
+        document.getElementById("account-gbp").textContent = `£${this.currencies.GBP}`
+        document.getElementById("account-jpy").textContent = `¥${this.currencies.JPY}`
         this.updateWalletIcon()
     }
     updateHistory(amount, action, description, category, date) {
@@ -28,9 +42,9 @@ export class Wallet {
         this.historyDisplay()
     }
     historyDisplay(sortedHistory = this.history) {
-        const historyElement = document.getElementById("history");
-        historyElement.innerHTML = '<ul class="collection"></ul>';
-        const ul = historyElement.querySelector('.collection');
+        const historyElement = document.getElementById("history")
+        historyElement.innerHTML = '<ul class="collection"></ul>'
+        const ul = historyElement.querySelector('.collection')
         sortedHistory.forEach(element => {
             let listItem = document.createElement("li")
             listItem.innerHTML = `${element.amount}, ${element.action}, ${element.description} ${element.category}, ${element.date}`
@@ -118,8 +132,37 @@ export class Wallet {
         link.click()
         document.body.removeChild(link)
     }
+    convertCurrency(amount, baseCurrency, targetCurrency) {
+        const roundedAmount = Number(amount.toFixed(2))
+        console.log(`Attempting to convert ${roundedAmount} from ${baseCurrency} to ${targetCurrency}`)
     
-
-
+        return getExchangeRate(baseCurrency, targetCurrency).then(rate => {
+            let convertedAmount = roundedAmount * rate
+            let roundedConvertedAmount = Number(convertedAmount.toFixed(2))
+    
+            if (this.currencies[baseCurrency] === undefined) {
+                console.error(`Error: No balance available for ${baseCurrency}`)
+                throw new Error(`No balance available for ${baseCurrency}`)
+            }
+    
+            console.log(this.currencies.USD)
+            this.currencies.USD -= roundedAmount
+    
+            if (this.currencies[baseCurrency] >= roundedAmount) {
+                this.currencies[baseCurrency] -= roundedAmount
+                if (!this.currencies[targetCurrency]) {
+                    this.currencies[targetCurrency] = 0
+                }
+                this.currencies[targetCurrency] += roundedConvertedAmount
+                this.updateDisplay()
+            } else {
+                throw new Error('Not enough balance')
+            }
+        }).catch(error => {
+            throw error
+        })
+    }
+    
+    
 }
 

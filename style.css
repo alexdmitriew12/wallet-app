@@ -2,7 +2,7 @@ body {
     overflow-x: hidden;
 }
 
-#account {
+#account, #account-eur, #account-gbp, #account-jpy {
     font-size: 32px;
 
 }
@@ -35,7 +35,7 @@ body {
     justify-content: center;
 }
 
-#exportButton, #statsButton {
+#exportButton, #statsButton, #kantorButton {
     float: right;
     margin: 2px;
 }
@@ -54,7 +54,7 @@ body {
     justify-content: center;
     transition: right 1 ease-in-out;
     animation-name: slide-in;
-    animation-duration: 5s;
+    animation-duration: 7;
     animation-iteration-count: 1;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -92,10 +92,14 @@ body {
     padding: 10px;
 }
 
-#close-export, #close-stats {
+#close-export, #close-stats, #close-kantor {
     cursor: pointer;
     color: red;
     font-size: 24px;
+}
+
+#kantorApply {
+    margin-top: 15px;
 }
 
 .dialog {
@@ -117,7 +121,6 @@ body {
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     font-size: 18px;
-    width: 10%;
 }
   
 .dialog-body button {
@@ -128,3 +131,7 @@ body {
 
 }
 
+#exchangeRateDisplay {
+    margin: 6px 2px 2px 2px;
+    font-size: 16px;
+}

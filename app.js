@@ -1,4 +1,6 @@
 import { Wallet } from './wallet.js'
+import { getExchangeRate } from './currencyApi.js'
+
 
 let money = 0
 document.getElementById("account").textContent = money
@@ -25,6 +27,7 @@ const addMoney = () => {
         notification(remove, `Write a description, fill a amount or select category`)
     }
 }
+
 
 const removeMoney = () => {
     let amount = parseFloat(document.getElementById("amount").value)
@@ -84,19 +87,43 @@ document.getElementById('statsButton').addEventListener('click', function() {
     toggleStatsDialog(true)
 })
 
+document.getElementById('kantorButton').addEventListener('click', function() {
+    toggleKantorDialog(true)
+})
+
 const toggleStatsDialog = (show) => {
     console.log("ok")
     document.getElementById('statsMenu').style.display = show ? 'flex' : 'none'
-
 }
+
+const updateExchangeRates = (currencyPairs) => {
+    const exchangeRateDisplay = document.getElementById('exchangeRateDisplay')
+    exchangeRateDisplay.textContent = ''
+  
+    currencyPairs.forEach(pair => {
+      const [baseCurrency, targetCurrency] = pair.split('-')
+      getExchangeRate(baseCurrency, targetCurrency)
+        .then(rate => {
+          const rateLine = document.createElement('div')
+          rateLine.textContent = `1 ${baseCurrency} = ${rate} ${targetCurrency}`
+          exchangeRateDisplay.appendChild(rateLine)
+        })
+    })
+}
+
+  const toggleKantorDialog = (show) => {
+    document.getElementById('kantorMenu').style.display = show ? 'flex' : 'none';
+    if (show) {
+      const currencyPairs = ['USD-EUR', 'USD-GBP', 'USD-JPY'];
+      updateExchangeRates(currencyPairs);
+    }
+  }
 
 const toggleExportDialog = (show) => {
     document.getElementById('exportDialog').style.display = show ? 'flex' : 'none'
     document.getElementById("export-csv").addEventListener("click", () => myWallet.exportToCSV("csv"))
     document.getElementById("export-txt").addEventListener("click", () => myWallet.exportToCSV("txt"))
 }
-
-
 
 
 
@@ -110,6 +137,21 @@ document.getElementById("sort-category").addEventListener("click", () => myWalle
 document.getElementById("sort-date").addEventListener("click", () => myWallet.sortDate())
 document.getElementById("close-export").addEventListener("click", () => toggleExportDialog(false))
 document.getElementById("close-stats").addEventListener("click", () => toggleStatsDialog(false))
+document.getElementById("close-kantor").addEventListener("click", () => toggleKantorDialog(false))
+
+document.getElementById("kantorApply").addEventListener("click", () => {
+    let amount = parseFloat(document.getElementById("kantor-amount").value)
+    let baseCurrency = document.getElementById("base-currency").value
+    let targetCurrency = document.getElementById("target-currency").value
+
+    if (!isNaN(amount) && amount > 0 && baseCurrency && targetCurrency && amount <= myWallet.money) {
+        myWallet.removeMoney(amount, "Cantor", "Currency exchange")
+        myWallet.convertCurrency(amount, baseCurrency, targetCurrency)
+    } else {
+        notification(remove, "Ensure all fields are filled correctly")
+    }
+})
+
 
 
 
