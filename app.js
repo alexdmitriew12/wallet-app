@@ -7,7 +7,11 @@ document.getElementById("account").textContent = money
 document.getElementById("history").textContent = ''
 const myWallet = new Wallet(money)
 
+document.addEventListener('DOMContentLoaded', () => {
+    myWallet.historyDisplay
+    myWallet.updateDisplay()
 
+})
 
 const addMoney = () => {
     let amount = parseFloat(document.getElementById("amount").value)
@@ -147,6 +151,7 @@ document.getElementById("kantorApply").addEventListener("click", () => {
     if (!isNaN(amount) && amount > 0 && baseCurrency && targetCurrency && amount <= myWallet.money) {
         myWallet.removeMoney(amount, "Cantor", "Currency exchange")
         myWallet.convertCurrency(amount, baseCurrency, targetCurrency)
+        notification(add, `Added ${amount}$ ${targetCurrency}`)
     } else {
         notification(remove, "Ensure all fields are filled correctly")
     }

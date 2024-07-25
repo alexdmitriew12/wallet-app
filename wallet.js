@@ -1,17 +1,25 @@
 import { getExchangeRate } from './currencyApi.js'
+import { setCookie } from './cookies.js'
+import { getCookie } from './cookies.js'
 
 export class Wallet {
     constructor(money) {
-        this.money = money
-        this.history = []
-        this.currencies = {
-            USD: this.money,
-            EUR: 0,
-            GBP: 0,
-            JPY: 0
+        const savedState = getCookie('walletState');
+        if (savedState) {
+            this.money = savedState.money
+            this.history = savedState.history
+            this.currencies = savedState.currencies
+        } else {
+            this.money = money;
+            this.history = []
+            this.currencies = {
+                USD: this.money,
+                EUR: 0,
+                GBP: 0,
+                JPY: 0
+            }
         }
     }
-
     addMoney(amount, description, category, date = new Date()) {
         amount = parseFloat(amount)
         this.money += Number(amount.toFixed(2))
@@ -19,6 +27,8 @@ export class Wallet {
         this.updateHistory(`<i class="material-icons icon">add</i>${amount}$`,`Description: ${description}`,`Type: `, category,`Date: ${date.toLocaleString('pl-PL')}`)
         this.statistics(amount, "add")
         this.currencies.USD += Number(amount.toFixed(2))
+        setCookie('walletState', {money: this.money, history: this.history, currencies: this.currencies}, 365)
+
     }
     removeMoney(amount, description, category, date = new Date()){
         amount = parseFloat(amount)
@@ -27,6 +37,8 @@ export class Wallet {
         this.updateHistory(`<i class="material-icons icon">remove</i>${amount}$`,`Description: ${description}`,`Type: `, category,`Date: ${date.toLocaleString('pl-PL')}`)
         this.statistics(amount, "remove")
         this.currencies.USD += Number(amount.toFixed(2))
+        setCookie('walletState', {money: this.money, history: this.history, currencies: this.currencies}, 365)
+
 
     }
     updateDisplay() {
@@ -134,16 +146,11 @@ export class Wallet {
     }
     convertCurrency(amount, baseCurrency, targetCurrency) {
         const roundedAmount = Number(amount.toFixed(2))
-        console.log(`Attempting to convert ${roundedAmount} from ${baseCurrency} to ${targetCurrency}`)
     
         return getExchangeRate(baseCurrency, targetCurrency).then(rate => {
             let convertedAmount = roundedAmount * rate
             let roundedConvertedAmount = Number(convertedAmount.toFixed(2))
     
-            if (this.currencies[baseCurrency] === undefined) {
-                console.error(`Error: No balance available for ${baseCurrency}`)
-                throw new Error(`No balance available for ${baseCurrency}`)
-            }
     
             console.log(this.currencies.USD)
             this.currencies.USD -= roundedAmount
@@ -155,8 +162,6 @@ export class Wallet {
                 }
                 this.currencies[targetCurrency] += roundedConvertedAmount
                 this.updateDisplay()
-            } else {
-                throw new Error('Not enough balance')
             }
         }).catch(error => {
             throw error

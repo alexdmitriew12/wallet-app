@@ -6,7 +6,7 @@ export function getExchangeRate(baseCurrency, targetCurrency) {
   return fetch(url)
     .then(response => {
       if (!response.ok) {
-        throw new Error(`HTTP error status: ${response.status}`)
+        throw new Error(`Error, check your api key in currencyApi.js file: ${response.status}`)
       }
       return response.json();
     })
